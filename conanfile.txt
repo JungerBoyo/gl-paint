@@ -1,0 +1,16 @@
+[requires]
+glfw/3.3.8
+glad/0.1.36
+spdlog/1.10.0
+fmt/8.1.1
+stb/cci.20210910
+imgui/1.74
+
+[generators]
+cmake_find_package
+
+[options]
+glad:spec=gl
+glad:extensions="GL_ARB_gl_spirv"
+glad:gl_profile=core
+glad:gl_version=4.5
