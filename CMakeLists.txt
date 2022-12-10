@@ -60,6 +60,10 @@ project_options(
 )
 ##############################
 
+### set glsl version here for config to see ##
+set(GLSL_VERSION "#version 450")
+##############################################
+
 ### targets ###
 add_subdirectory(shaders)
 add_subdirectory(assets)

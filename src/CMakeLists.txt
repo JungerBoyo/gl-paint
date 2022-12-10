@@ -1,19 +1,25 @@
-find_package(glfw3 REQUIRED)
-find_package(glad REQUIRED)
-find_package(imgui REQUIRED)
-find_package(stb REQUIRED)
+# find_package(glfw3 REQUIRED)
+# find_package(glad REQUIRED)
+# find_package(imgui REQUIRED)
 find_package(spdlog REQUIRED)
 
-add_library(boilerplate_IMPL STATIC Shader.cpp Window.cpp)
-target_link_libraries(boilerplate_IMPL PUBLIC boilerplate_INC)
+add_subdirectory(utils)
+add_subdirectory(gl_layer)
+add_subdirectory(ui_layer)
+add_subdirectory(window_layer)
 
-target_link_system_libraries(boilerplate_IMPL
-  PRIVATE
-    glad::glad
-    spdlog::spdlog
-    SHCONFIG
+add_library(app_IMPL STATIC App.cpp)
+target_link_libraries(app_IMPL PUBLIC app_INC)
+target_link_libraries(app_IMPL
+  PRIVATE 
+    window_layer_IMPL
+    gl_layer_IMPL
+    ui_layer_IMPL
 )
-
+target_link_system_libraries(app_IMPL
+  PRIVATE 
+    spdlog::spdlog
+)
 add_executable(${PROJECT_NAME} 
   main.cpp
 )
@@ -22,22 +28,9 @@ target_link_libraries(${PROJECT_NAME}
   PRIVATE 
     project_options
     project_warnings
-    boilerplate_IMPL
-    SHCONFIG
-)
-
-target_link_system_libraries(${PROJECT_NAME}
-  PRIVATE
-    imgui_bindings
-    imgui::imgui
-    spdlog::spdlog
-    glad::glad
-    stbi
+    app_IMPL
 )
 
 add_dependencies(${PROJECT_NAME} compile_and_copy_shaders_dirs copy_assets)
 
-target_include_directories(${PROJECT_NAME} 
-  PRIVATE 
-    "${CMAKE_BINARY_DIR}/config"
-)
+# target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_BINARY_DIR}/config")

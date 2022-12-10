@@ -1,5 +1,10 @@
 add_library(SHCONFIG INTERFACE)
 
+target_compile_definitions(SHCONFIG INTERFACE SHCONFIG_WORKSPACE_TEXTURE_ARRAY_BINDING=4)
+
+target_compile_definitions(SHCONFIG INTERFACE SHCONFIG_FIRST_USER_TEXTURE_BINDING=5)
+target_compile_definitions(SHCONFIG INTERFACE SHCONFIG_MAX_USER_TEXTURES=30)
+
 target_compile_definitions(SHCONFIG INTERFACE SHCONFIG_2D_TEX_BINDING=5)
 
 target_compile_definitions(SHCONFIG INTERFACE SHCONFIG_UBO_BINDING=5)
@@ -9,6 +14,7 @@ target_compile_definitions(SHCONFIG INTERFACE SHCONFIG_IN_TEXCOORD_LOCATION=1)
 
 target_compile_definitions(SHCONFIG INTERFACE SHCONFIG_GL_VERSION_MAJOR=4)
 target_compile_definitions(SHCONFIG INTERFACE SHCONFIG_GL_VERSION_MINOR=5)
+
 
 if(REMOTE_BUILD)
   add_custom_target(compile_and_copy_shaders_dirs

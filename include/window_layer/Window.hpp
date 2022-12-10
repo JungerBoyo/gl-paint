@@ -1,26 +1,24 @@
-#ifndef TEMPLATE_PROJECT_WINDOW_HPP
-#define TEMPLATE_PROJECT_WINDOW_HPP
+#ifndef GLPAINT_WINDOW_HPP
+#define GLPAINT_WINDOW_HPP
 
 #include <memory>
 #include <string_view>
 
-namespace template_project {
+#include <common.hpp>
+
+namespace glpaint {
 
 struct Window {
 	struct WinNative;
 	std::shared_ptr<WinNative> win_handle_;
 
-	Window(std::string_view title, int w, int h,
-		   void (*win_error_callback)(int, const char *),
-		   void (*gl_error_callback)(std::uint32_t, std::uint32_t,
-									 std::uint32_t, std::uint32_t, int,
-									 const char *, const void *));
+	Window(std::string_view title, i32 w, i32 h, void (*win_error_callback)(i32 err_code, const char* message));
 	
 	[[nodiscard]] void* native();
-	[[nodiscard]] std::pair<int, int> size() const;
-	[[nodiscard]] float time() const;
+	[[nodiscard]] std::pair<i32, i32> size() const;
+	[[nodiscard]] f32 time() const;
 
-	void setViewport(int w, int h) const;
+	void setViewport(i32 w, i32 h) const;
 	void setWinUserDataPointer(void* ptr);
 
 	template<typename R, typename ...Args>

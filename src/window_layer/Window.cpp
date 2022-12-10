@@ -1,4 +1,4 @@
-#include "Window.hpp"
+#include <Window.hpp>
 
 #include <stdexcept>
 
@@ -6,17 +6,13 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
-using namespace template_project;
+using namespace glpaint;
 
 struct Window::WinNative {
 	GLFWwindow *value{nullptr};
 };
 
-Window::Window(std::string_view title, int w, int h,
-			   void (*win_error_callback)(int, const char *),
-			   void (*gl_error_callback)(std::uint32_t, std::uint32_t,
-										 std::uint32_t, std::uint32_t, int,
-										 const char *, const void *))
+Window::Window(std::string_view title, i32 w, i32 h, void (*win_error_callback)(i32 err_code, const char* message))
 	: win_handle_(std::make_shared<WinNative>()) {
 
 	/// GLFW INIT
@@ -40,51 +36,34 @@ Window::Window(std::string_view title, int w, int h,
 	glfwSetInputMode(win_handle_->value, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
 	/// GLAD INIT
-	if (gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)) == // NOLINT
-		0) {
-		throw std::runtime_error("glad loader failed");
-	}
-	if (gl_error_callback != nullptr) {
-		glEnable(GL_DEBUG_OUTPUT);
-		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE,
-							  GL_DEBUG_SEVERITY_NOTIFICATION, 0, nullptr,
-							  GL_TRUE);
-		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE,
-							  GL_DEBUG_SEVERITY_LOW, 0, nullptr,
-							  GL_TRUE);
-		glDebugMessageCallback(gl_error_callback, nullptr);
-	}
-	//glClearColor(0.22F, 0.61F, 0.78F, 1.F);
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
 }
 
 void* Window::native() {
 	return static_cast<void*>(win_handle_->value);
 }
-float Window::time() const {
-	return static_cast<float>(glfwGetTime());
+f32 Window::time() const {
+	return static_cast<f32>(glfwGetTime());
 }
-std::pair<int, int> Window::size() const {
-	int w{0};
-	int h{0};
+std::pair<i32, i32> Window::size() const {
+	i32 w{0};
+	i32 h{0};
 	glfwGetWindowSize(win_handle_->value, &w, &h);
 	return {w, h};
 }
-void Window::setViewport(int w, int h) const {
+void Window::setViewport(i32 w, i32 h) const {
 	glViewport(0, 0, w, h);
 }
 void Window::setWinUserDataPointer(void* ptr){
 	glfwSetWindowUserPointer(win_handle_->value, ptr);
 }
 template<>
-void Window::setKeyCallback<void, GLFWwindow*, int, int, int, int>
-(void(*key_callback)(GLFWwindow*, int, int, int, int)) {
+void Window::setKeyCallback<void, GLFWwindow*, i32, i32, i32, i32>
+(void(*key_callback)(GLFWwindow*, i32, i32, i32, i32)) {
 	glfwSetKeyCallback(win_handle_->value, key_callback);
 }
 template<>
-void Window::setMousePositionCallback<void, GLFWwindow*, double, double>
-(void(*mouse_position_callback)(GLFWwindow*, double, double)) {
+void Window::setMousePositionCallback<void, GLFWwindow*, f64, f64>
+(void(*mouse_position_callback)(GLFWwindow*, f64, f64)) {
 	glfwSetCursorPosCallback(win_handle_->value, mouse_position_callback);
 }
 

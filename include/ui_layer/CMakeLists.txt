@@ -1,0 +1,3 @@
+add_library(ui_layer_INC INTERFACE UILayer.hpp)
+target_include_directories(ui_layer_INC INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(ui_layer_INC INTERFACE common_INC utils_INC events_INC)
