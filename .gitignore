@@ -3,3 +3,4 @@ build*/
 *.code-workspace
 format_code.bash
 .conanprofile
+todo.txt
