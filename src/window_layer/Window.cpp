@@ -57,14 +57,20 @@ void Window::setWinUserDataPointer(void* ptr){
 	glfwSetWindowUserPointer(win_handle_->value, ptr);
 }
 template<>
-void Window::setKeyCallback<void, GLFWwindow*, i32, i32, i32, i32>
-(void(*key_callback)(GLFWwindow*, i32, i32, i32, i32)) {
+void Window::setKeyCallback(void(*key_callback)(GLFWwindow*, i32, i32, i32, i32)) {
 	glfwSetKeyCallback(win_handle_->value, key_callback);
 }
 template<>
-void Window::setMousePositionCallback<void, GLFWwindow*, f64, f64>
-(void(*mouse_position_callback)(GLFWwindow*, f64, f64)) {
+void Window::setMousePositionCallback(void(*mouse_position_callback)(GLFWwindow*, f64, f64)) {
 	glfwSetCursorPosCallback(win_handle_->value, mouse_position_callback);
+}
+template<>
+void Window::setWindowResizeCallback(void(*window_resize_callback)(GLFWwindow*, i32, i32)) {
+	glfwSetWindowSizeCallback(win_handle_->value, window_resize_callback);
+}
+template<>
+void Window::setMouseScrollCallback(void(*mouse_scroll_callback)(GLFWwindow*, f64, f64)) {
+	glfwSetScrollCallback(win_handle_->value, mouse_scroll_callback);
 }
 
 void Window::swapBuffers() const {

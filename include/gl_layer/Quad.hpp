@@ -8,6 +8,7 @@
 namespace glpaint {
 
 struct Quad {
+    static constexpr i32 VERTICES_COUNT{ 6 };
     static constexpr std::array<float, 6UL*(2UL+2UL)> VERTICES {{
         -1.F,-1.F, 0.F, 0.F,
          1.F,-1.F, 1.F, 0.F,

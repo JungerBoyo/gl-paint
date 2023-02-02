@@ -4,3 +4,4 @@ build*/
 format_code.bash
 .conanprofile
 todo.txt
+shaders/.ninja_log

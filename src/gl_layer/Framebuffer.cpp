@@ -31,6 +31,7 @@ Framebuffer::Framebuffer(const std::vector<ColorAttachment>& attachments, i32 w,
         );
         ++i;
     }
+    glViewport(0, 0, w, h);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 void Framebuffer::bind() {
@@ -61,6 +62,7 @@ void Framebuffer::tryResize(i32 new_w, i32 new_h) {
             0
         );
     }
+    glViewport(0, 0, width_, height_);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     width_ = new_w;
     height_ = new_h;

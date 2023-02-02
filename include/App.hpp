@@ -2,6 +2,7 @@
 #define GLPAINT_APP_HPP
 
 #include <thread>
+#include <stop_token>
 
 #include <RingQueue.hpp>
 #include <Event.hpp>
@@ -18,10 +19,10 @@ private:
 	GLLayer gl_layer_;
 	UILayer ui_layer_;
 
+	std::stop_source app_stop_source_;
+
 	std::thread app_event_polling_thread_;
 	EventQueue event_queue_;
-
-	bool app_running_;
 
 	App();
 
@@ -30,7 +31,7 @@ public:
 		static App app{};
 		return app;
 	}
-	void operator()(); 
+	void operator()(std::stop_token); 
 	void run(); 
 	void deinit();
 };

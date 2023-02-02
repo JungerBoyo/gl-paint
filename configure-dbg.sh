@@ -1,0 +1,1 @@
+cmake -G $1 -DCMAKE_BUILD_TYPE=Debug -S . -B ./build-dbg

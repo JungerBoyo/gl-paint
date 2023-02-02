@@ -20,9 +20,32 @@ namespace glpaint {
         i32 height{ 0 };
         i32 num_channels{ 0 };
     };
-    std::optional<ImageData<u8>> loadImageU8(fs::path img_path, i32 desired_num_channels);
-    std::optional<ImageData<u16>> loadImageU16(fs::path img_path, i32 desired_num_channels);
-    std::optional<ImageData<f32>> loadImageF32(fs::path img_path, i32 desired_num_channels);
+    std::optional<ImageData<u8>> loadImageU8(const fs::path& img_path, i32 desired_num_channels);
+    std::optional<ImageData<u16>> loadImageU16(const fs::path& img_path, i32 desired_num_channels);
+    std::optional<ImageData<f32>> loadImageF32(const fs::path& img_path, i32 desired_num_channels);
+
+    template<typename T>
+    ImageData<T> repeatPattern(const ImageData<T>& src_image, i32 dst_width, i32 dst_height) {
+        const auto full_size = dst_width * dst_height * src_image.num_channels;
+        std::vector<T> dst_data(full_size);
+
+        const auto src_width = src_image.width;
+        const auto src_height = src_image.height;
+        const auto src_num_channels = src_image.num_channels;
+        const auto src_stride = src_num_channels * src_width;
+        const auto dst_stride = src_num_channels * dst_width;
+        for (usize y{0}; y < dst_height; ++y) {
+            for (usize x{0}; x < dst_stride; ++x) {
+                dst_data[x + y * dst_stride] = src_image.data[(x % src_stride) + (y % src_height) * src_stride];
+            }
+        }
+        return {
+            std::move(dst_data),
+            dst_width,
+            dst_height,
+            src_num_channels
+        };
+    }
 
 
     struct MipmapGenerator {

@@ -1,7 +1,7 @@
 BIN_DIR = bin
 SRC_DIR = src
 
-BASIC_SHADER = basic_shader
+WORKSPACE_VIEWPORT_SHADER = workspace_viewport_shader
 
 GLSL_OPT = spirv-opt
 GLSL_OPT_FLAGS = -O
@@ -15,7 +15,7 @@ rule mkdir
   command = mkdir -p $out
 
 build $BIN_DIR: mkdir
-build $BIN_DIR/$BASIC_SHADER: mkdir | $BIN_DIR
+build $BIN_DIR/$WORKSPACE_VIEWPORT_SHADER: mkdir | $BIN_DIR
 
-build $BIN_DIR/$BASIC_SHADER/vert.spv: glsl $SRC_DIR/$BASIC_SHADER/shader.vert | $BIN_DIR/$BASIC_SHADER
-build $BIN_DIR/$BASIC_SHADER/frag.spv: glsl $SRC_DIR/$BASIC_SHADER/shader.frag | $BIN_DIR/$BASIC_SHADER
+build $BIN_DIR/$WORKSPACE_VIEWPORT_SHADER/vert.spv: glsl $SRC_DIR/$WORKSPACE_VIEWPORT_SHADER/shader.vert | $BIN_DIR/$WORKSPACE_VIEWPORT_SHADER
+build $BIN_DIR/$WORKSPACE_VIEWPORT_SHADER/frag.spv: glsl $SRC_DIR/$WORKSPACE_VIEWPORT_SHADER/shader.frag | $BIN_DIR/$WORKSPACE_VIEWPORT_SHADER

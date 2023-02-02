@@ -1,6 +1,7 @@
 #include <image_ops.hpp>
 
 #include <fstream>
+#include <cstring>
 
 #include <glad/glad.h>
 #include <stb_image.h>
@@ -10,7 +11,7 @@ using namespace glpaint;
 
 static std::optional<std::vector<char>> loadFileRaw(const fs::path& path);
 
-std::optional<ImageData<u8>> loadImageU8(const fs::path& img_path, i32 desired_num_channels) {
+std::optional<ImageData<u8>> glpaint::loadImageU8(const fs::path& img_path, i32 desired_num_channels) {
     i32 width{ 0 };
     i32 height{ 0 };
     i32 num_channels{ 0 };
@@ -43,7 +44,7 @@ std::optional<ImageData<u8>> loadImageU8(const fs::path& img_path, i32 desired_n
         return std::nullopt;
     }
 }
-std::optional<ImageData<u16>> loadImageU16(const fs::path& img_path, i32 desired_num_channels) {
+std::optional<ImageData<u16>> glpaint::loadImageU16(const fs::path& img_path, i32 desired_num_channels) {
     i32 width{ 0 };
     i32 height{ 0 };
     i32 num_channels{ 0 };
@@ -75,7 +76,7 @@ std::optional<ImageData<u16>> loadImageU16(const fs::path& img_path, i32 desired
         return std::nullopt;
     }
 }
-std::optional<ImageData<f32>> loadImageF32(const fs::path& img_path, i32 desired_num_channels) {
+std::optional<ImageData<f32>> glpaint::loadImageF32(const fs::path& img_path, i32 desired_num_channels) {
     i32 width{ 0 };
     i32 height{ 0 };
     i32 num_channels{ 0 };
@@ -130,11 +131,8 @@ MipmapGenerator MipmapGenerator::create(
 
     i32 result_i_read{ 0 };
     i32 result_i_write{ height * width * num_channels * texel_size };
-    std::copy(
-        static_cast<const u8*>(data), 
-        static_cast<const u8*>(data) + result_i_write, // NOLINT
-        result.begin()
-    );
+
+    std::memcpy(result.data(), static_cast<const u8*>(data), result_i_write);
 
     co_yield {
         .data = static_cast<const void*>(result.data()),
@@ -183,7 +181,7 @@ MipmapGenerator MipmapGenerator::create(
         );
 
         co_yield {
-            .data = static_cast<const void*>(result.data() + result_i_write),
+            .data = static_cast<const void*>(result.data() + result_i_write), // NOLINT
             .width = out_w,
             .height = out_h  
         };

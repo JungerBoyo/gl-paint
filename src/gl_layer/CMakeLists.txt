@@ -12,6 +12,8 @@ add_library(gl_layer_IMPL
     Texture2DArray.cpp
     Workspace.cpp
     ShadersRepository.cpp
+    Sampler.cpp
+    StorageBufferObject.cpp
 )
 target_link_libraries(gl_layer_IMPL PUBLIC gl_layer_INC)
 

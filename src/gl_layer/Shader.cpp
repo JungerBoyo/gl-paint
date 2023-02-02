@@ -13,7 +13,7 @@ Shader::Shader(Type type, const std::vector<std::filesystem::path>& paths) : typ
     bool is_arb_spirv_supported{false};
     glGetIntegerv(GL_NUM_EXTENSIONS, &ext_num);
     for (i32 i{0}; i<ext_num; ++i) {
-        const auto ext_str = std::string_view(reinterpret_cast<const char*>(glGetStringi(GL_EXTENSIONS, i)));
+        const auto ext_str = std::string_view(reinterpret_cast<const char*>(glGetStringi(GL_EXTENSIONS, i))); // NOLINT
         if (ext_str == "GL_ARB_gl_spirv") {
             is_arb_spirv_supported = true;
             break;

@@ -2,6 +2,7 @@
 #define GLPAINT_FRAMEBUFFER_HPP
 
 #include <vector>
+#include <tuple>
 
 #include <common.hpp>
 
@@ -23,6 +24,8 @@ public:
     Framebuffer(const std::vector<ColorAttachment>& attachments, i32 w, i32 h);
 
     void tryResize(i32 new_w, i32 new_h);
+
+    [[nodiscard]] auto size() const { return std::make_tuple(width_, height_); }
 
     void bind();
     void unbind();

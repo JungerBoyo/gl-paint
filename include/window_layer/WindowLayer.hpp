@@ -18,7 +18,7 @@ private:
 public:
     Window window; 
 
-    WindowLayer(EventQueue& event_queue); 
+    WindowLayer(EventQueue& event_queue);
 
     void deinit(); 
 };

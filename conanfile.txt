@@ -3,7 +3,7 @@ glfw/3.3.8
 glad/0.1.36
 spdlog/1.10.0
 stb/cci.20210910
-imgui/1.74
+imgui/cci.20220621+1.88.docking
 
 [generators]
 cmake_find_package

@@ -12,6 +12,7 @@ add_library(app_IMPL STATIC App.cpp)
 target_link_libraries(app_IMPL PUBLIC app_INC)
 target_link_libraries(app_IMPL
   PRIVATE 
+    SHCONFIG
     window_layer_IMPL
     gl_layer_IMPL
     ui_layer_IMPL
@@ -29,6 +30,10 @@ target_link_libraries(${PROJECT_NAME}
     project_options
     project_warnings
     app_IMPL
+)
+target_link_system_libraries(${PROJECT_NAME}
+  PRIVATE
+    spdlog::spdlog
 )
 
 add_dependencies(${PROJECT_NAME} compile_and_copy_shaders_dirs copy_assets)

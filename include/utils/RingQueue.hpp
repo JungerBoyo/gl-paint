@@ -4,6 +4,7 @@
 #include <cinttypes>
 #include <array>
 #include <mutex>
+#include <atomic>
 #include <condition_variable>
 #include <optional>
 
